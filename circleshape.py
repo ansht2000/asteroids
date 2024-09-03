@@ -16,7 +16,7 @@ class CircleShape(pygame.sprite.Sprite):
     def draw(self, screen):
         pass
 
-    def updated(self, dt):
+    def update(self, dt):
         pass
         
     
