@@ -11,3 +11,5 @@ class Shot(CircleShape):
 
     def update(self, dt):
         self.position += self.velocity * dt
+        if self.position.x >= pygame.display.get_window_size()[0] or self.position.y >= pygame.display.get_window_size()[1]:
+            self.kill()

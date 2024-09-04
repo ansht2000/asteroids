@@ -22,22 +22,40 @@ def main():
     AsteroidField.containers = (updatable)
     Shot.containers = (shots, updatable, drawable)
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-    asteroid_field = AsteroidField() 
+    asteroid_field = AsteroidField()
+    score = 0
+    lives = 3
+    font = pygame.font.SysFont("Arial", 36)
+    score_text = font.render(f"Score: {score}", True, (255, 255, 255))
+    lives_text = font.render(f"Lives: {lives}", True, (255, 255, 255))
+    score_rect = score_text.get_rect(center=(70, 20))
+    lives_rect = score_text.get_rect(center=(70, 60))
     while(1):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
         screen.fill(0x000)
+        screen.blit(score_text, score_rect)
+        screen.blit(lives_text, lives_rect)
         for object in updatable:
             object.update(dt)
         for asteroid in asteroids:
             if player.collision_detected(asteroid):
-                print("Game Over!")
-                return
+                lives -= 1
+                lives_text = font.render(f"Lives: {lives}", True, (255, 255, 255))
+                if lives == 0:
+                    game_over_text = font.render(f"Score: {score}", True, (255, 255, 255))
+                    game_over_rect = score_text.get_rect(center=(pygame.display.get_window_size()[0] / 2, pygame.display.get_window_size()[1] / 2))
+                    screen.blit(game_over_text, game_over_rect)
+                    return
+                player.position.x = pygame.display.get_window_size()[0] / 2
+                player.position.y = pygame.display.get_window_size()[1] / 2
             for shot in shots:
                 if shot.collision_detected(asteroid):
                     shot.kill()
-                    asteroid.split()
+                    if asteroid.split():
+                        score += 1
+                        score_text = font.render(f"Score: {score}", True, (255, 255, 255))
         for object in drawable:
             object.draw(screen)
         pygame.display.flip()

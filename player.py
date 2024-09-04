@@ -27,6 +27,8 @@ class Player(CircleShape):
         forward_move = pygame.Vector2(0, 1).rotate(self.rotation)
         forward_move *= PLAYER_SPEED * dt
         self.position += forward_move
+        self.position.x %= pygame.display.get_window_size()[0]
+        self.position.y %= pygame.display.get_window_size()[1]
 
     def update(self, dt):
         self.shoot_timer -= dt
