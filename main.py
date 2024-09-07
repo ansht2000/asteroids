@@ -54,7 +54,7 @@ def game_over(screen):
         screen.fill((0, 0, 0))
         font = pygame.font.SysFont("Arial", 36)
         retry_text, retry_rect = render_text(font, "Try Again", (255, 255, 255), (pygame.display.get_window_size()[0] / 2, pygame.display.get_window_size()[1] / 2 - 50))
-        quit_text, quit_rect = render_text(font, "Quit", (255, 255, 255), (pygame.display.get_window_size()[0] / 2, pygame.display.get_window_size()[1] / 2 + 50))
+        quit_text, quit_rect = render_text(font, "Quit to Main Menu", (255, 255, 255), (pygame.display.get_window_size()[0] / 2, pygame.display.get_window_size()[1] / 2 + 50))
         screen.blit(retry_text, retry_rect)
         screen.blit(quit_text, quit_rect)
         pygame.display.flip()
@@ -67,8 +67,7 @@ def game_over(screen):
                 if retry_rect.collidepoint(event.pos):
                     return GAME  # Switch back to the game state
                 if quit_rect.collidepoint(event.pos):
-                    pygame.quit()
-                    sys.exit()
+                    return START_MENU
 
 def game_loop(screen, clock, dt):
     updatable = pygame.sprite.Group()
