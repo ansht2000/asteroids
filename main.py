@@ -8,9 +8,6 @@ import sys
 
 def main():
     pygame.init()
-    print("Starting asteroids!")
-    print(f"Screen width: {SCREEN_WIDTH}")
-    print(f"Screen height: {SCREEN_HEIGHT}")
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
     dt = 0
@@ -24,7 +21,7 @@ def main():
         if game_state == GAME_OVER:
             game_state = game_over(screen)
 
-def render_text(font, text, color, center_position):
+def render_text(font: pygame.font.Font, text, color, center_position):
     text_surface = font.render(text, True, color)
     text_rect = text_surface.get_rect(center=center_position)
     return text_surface, text_rect
