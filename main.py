@@ -102,6 +102,7 @@ def game_loop(screen, clock, dt):
                 player.position.y = pygame.display.get_window_size()[1] / 2
             for shot in shots:
                 if shot.collision_detected(asteroid):
+                    asteroid.explode(screen)
                     shot.kill()
                     if asteroid.split():
                         score += 1
