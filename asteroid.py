@@ -13,8 +13,8 @@ class Asteroid(CircleShape):
 
     def _make_weights(self):
         vertex_weights = []
-        for theta in range(0, 361, 36):
-            rand_len = random.uniform(self.radius / 2, self.radius)
+        for theta in range(0, 361, 18):
+            rand_len = random.uniform(3 * self.radius / 4, self.radius)
             vertex_weights.append((rand_len * math.cos((math.pi * theta) / 180), rand_len * math.sin((math.pi * theta) / 180)))
         return vertex_weights
 

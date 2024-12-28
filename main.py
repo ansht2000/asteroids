@@ -87,6 +87,11 @@ def game_loop(screen, clock, dt):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_f:
+                    player.shot_type += 1
+                    player.shot_type %= 2
+
         screen.fill(0x000)
         screen.blit(score_text, score_rect)
         screen.blit(lives_text, lives_rect)
@@ -111,6 +116,7 @@ def game_loop(screen, clock, dt):
             object.draw(screen)
         pygame.display.flip()
         dt = clock.tick(60) / 1000
+        print(clock.get_fps())
 
 if __name__ == "__main__":
     main()

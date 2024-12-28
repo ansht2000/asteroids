@@ -8,6 +8,10 @@ class Player(CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.shoot_timer = 0
+        # integers 0-n represent different shot types
+        # 0: single shot
+        # 1: triple shot
+        self.shot_type = 0
 
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -54,7 +58,17 @@ class Player(CircleShape):
     def shoot(self):
         if self.shoot_timer > 0:
             return
-        self.shoot_timer = PLAYER_SHOOT_COOLDOWN
-        shot = Shot(self.position.x, self.position.y)
-        shot_speed = pygame.Vector2(0, 1).rotate(self.rotation)
-        shot.velocity = shot_speed * PLAYER_SHOOT_SPEED
+        match self.shot_type:
+            case 0:
+                self.shoot_timer = PLAYER_SINGLE_SHOOT_COOLDOWN
+                shot = Shot(self.position.x, self.position.y)
+                shot_velocity = pygame.Vector2(0, 1).rotate(self.rotation)
+                shot.velocity = shot_velocity * PLAYER_SHOOT_SPEED
+            case 1:
+                self.shoot_timer = PLAYER_TRIPLE_SHOOT_COOLDOWN
+                shot_one = Shot(self.position.x, self.position.y)
+                shot_two = Shot(self.position.x, self.position.y)
+                shot_three = Shot(self.position.x, self.position.y)
+                shot_one.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
+                shot_two.velocity =  pygame.Vector2(0, 1).rotate(self.rotation - 30) * PLAYER_SHOOT_SPEED
+                shot_three.velocity = pygame.Vector2(0, 1).rotate(self.rotation + 30) * PLAYER_SHOOT_SPEED
