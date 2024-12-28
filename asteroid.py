@@ -1,3 +1,4 @@
+import math
 import pygame
 import random
 
@@ -8,9 +9,20 @@ from circleshape import CircleShape
 class Asteroid(CircleShape):
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
+        self.vertex_weights = self._make_weights()
+
+    def _make_weights(self):
+        vertex_weights = []
+        for theta in range(0, 361, 36):
+            rand_len = random.uniform(self.radius / 2, self.radius)
+            vertex_weights.append((rand_len * math.cos((math.pi * theta) / 180), rand_len * math.sin((math.pi * theta) / 180)))
+        return vertex_weights
 
     def draw(self, screen):
-        pygame.draw.circle(screen, "white", self.position, self.radius, 2)
+        vertices = []
+        for vertex_weight in self.vertex_weights:
+            vertices.append((self.position.x + vertex_weight[0], self.position.y + vertex_weight[1]))
+        pygame.draw.polygon(screen, "white", vertices, 2)
 
     def update(self, dt):
         self.position += self.velocity * dt
