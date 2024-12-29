@@ -74,7 +74,7 @@ class Game:
                         asteroid.explode(self.screen)
                         shot.kill()
                         if asteroid.split():
-                            self.score += 1
+                            self.score += 10
                             self.score_text = self.font.render(
                                 f"Score: {self.score}",
                                 True,
