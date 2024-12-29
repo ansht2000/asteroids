@@ -1,13 +1,8 @@
 import pygame
 from constants import *
-from render_utils import render_text
-from player import Player
-from asteroid import Asteroid
-from asteroidfield import AsteroidField
 from game import Game
 from start_menu import StartMenu
 from game_over_menu import GameOverMenu
-import sys
 
 def main():
     pygame.init()
