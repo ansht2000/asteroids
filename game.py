@@ -84,7 +84,6 @@ class Game:
                 object.draw(self.screen)
             pygame.display.flip()
             self.dt = self.clock.tick(60) / 1000
-            print(self.clock.get_fps())
 
 
 
