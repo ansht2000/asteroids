@@ -41,6 +41,11 @@ class Game:
         self.score_rect = score_rect
         self.lives_text = lives_text
         self.lives_rect = lives_rect
+        self.bg_image = pygame.image.load('background.png')
+        self.bg_image = pygame.transform.scale(
+            self.bg_image,
+            (pygame.display.get_window_size()[0], pygame.display.get_window_size()[1])
+        )
 
     def run(self):
         while True:
@@ -52,7 +57,7 @@ class Game:
                     if event.key == pygame.K_f:
                         self.player.shot_type += 1
                         self.player.shot_type %= 2
-            self.screen.fill(0x000)
+            self.screen.blit(self.bg_image, (0, 0))
             self.screen.blit(self.score_text, self.score_rect)
             self.screen.blit(self.lives_text, self.lives_rect)
             for object in self.updatable:

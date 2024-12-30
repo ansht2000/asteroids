@@ -1,4 +1,5 @@
 import pygame
+import pygame.gfxdraw
 from circleshape import CircleShape
 from constants import *
 from shot import Shot
@@ -22,7 +23,7 @@ class Player(CircleShape):
         return [a, b, c]
     
     def draw(self, screen):
-        pygame.draw.polygon(screen, "white", self.triangle(), 2)
+        pygame.gfxdraw.filled_polygon(screen, self.triangle(), (255, 255, 255))
 
     def rotate(self, dt): 
         self.rotation += PLAYER_TURN_SPEED * dt

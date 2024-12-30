@@ -22,7 +22,8 @@ class Asteroid(CircleShape):
         vertices = []
         for vertex_weight in self.vertex_weights:
             vertices.append((self.position.x + vertex_weight[0], self.position.y + vertex_weight[1]))
-        pygame.draw.polygon(screen, "white", vertices, 2)
+        pygame.gfxdraw.filled_polygon(screen, vertices, (105, 105, 105))
+        pygame.draw.polygon(screen, (0, 0, 0), vertices, 2)
 
     def update(self, dt):
         self.position += self.velocity * dt
