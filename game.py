@@ -8,7 +8,7 @@ from constants import *
 from render_utils import render_text
 
 class Game:
-    def __init__(self, screen, clock, dt):
+    def __init__(self, screen, clock, dt) -> None:
         self.screen = screen
         self.clock = clock
         self.dt = dt
@@ -63,7 +63,7 @@ class Game:
             for object in self.updatable:
                 object.update(self.dt)
             for asteroid in self.asteroids:
-                if self.player.collision_detected(asteroid):
+                if self.player.collision_detected_with_circle_shape(asteroid):
                     self.lives -= 1
                     self.lives_text = self.font.render(
                         f"Lives: {self.lives}",

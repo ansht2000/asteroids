@@ -1,10 +1,10 @@
 import pygame
 import pygame.gfxdraw
-from circleshape import CircleShape
+from triangleshape import TriangleShape
 from constants import *
 from shot import Shot
 
-class Player(CircleShape):
+class Player(TriangleShape):
     def __init__(self, x, y):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
@@ -16,14 +16,17 @@ class Player(CircleShape):
 
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius / 1.5
+        side = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius / 1.5
         a = self.position + forward * self.radius
-        b = self.position - forward * self.radius - right
-        c = self.position - forward * self.radius + right
-        return [a, b, c]
+        b = self.position - forward * self.radius - side
+        c = self.position - forward * self.radius * .5
+        d = self.position - forward * self.radius + side
+        return [a, b, c, d]
     
     def draw(self, screen):
-        pygame.gfxdraw.filled_polygon(screen, self.triangle(), (255, 255, 255))
+        triangle: list = self.triangle()
+        pygame.gfxdraw.filled_polygon(screen, triangle, (255, 255, 255))
+        pygame.draw.polygon(screen, "black", triangle, 2)
 
     def rotate(self, dt): 
         self.rotation += PLAYER_TURN_SPEED * dt
