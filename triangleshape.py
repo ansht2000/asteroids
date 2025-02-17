@@ -12,6 +12,7 @@ class TriangleShape(pygame.sprite.Sprite):
         self.position = pygame.Vector2(x, y)
         self.velocity = pygame.Vector2(0, 0)
         self.radius = radius
+        self.points = []
     
     def draw(self, screen):
         pass
@@ -20,4 +21,8 @@ class TriangleShape(pygame.sprite.Sprite):
         pass
 
     def collision_detected_with_circle_shape(self, other):
-        return self.position.distance_to(other.position) <= self.radius + other.radius
+        lengths = []
+        for point in self.points:
+            lengths.append((point - other.position).length())
+        min_len = min(lengths)
+        return min_len <= other.radius

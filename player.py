@@ -21,7 +21,8 @@ class Player(TriangleShape):
         b = self.position - forward * self.radius - side
         c = self.position - forward * self.radius * .5
         d = self.position - forward * self.radius + side
-        return [a, b, c, d]
+        self.points = [a, b, c, d]
+        return self.points
     
     def draw(self, screen):
         triangle: list = self.triangle()
