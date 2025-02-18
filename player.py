@@ -77,3 +77,6 @@ class Player(TriangleShape):
                 shot_one.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
                 shot_two.velocity =  pygame.Vector2(0, 1).rotate(self.rotation - 30) * PLAYER_SHOOT_SPEED
                 shot_three.velocity = pygame.Vector2(0, 1).rotate(self.rotation + 30) * PLAYER_SHOOT_SPEED
+
+    def apply_powerup(self):
+        print("powerup applied")
