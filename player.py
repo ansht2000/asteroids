@@ -13,6 +13,8 @@ class Player(TriangleShape):
         # 0: single shot
         # 1: triple shot
         self.shot_type = 0
+        self.shield = False
+        self.acceleration = PLAYER_ACCELERATION
 
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -27,7 +29,10 @@ class Player(TriangleShape):
     def draw(self, screen):
         triangle: list = self.triangle()
         pygame.gfxdraw.filled_polygon(screen, triangle, (255, 255, 255))
-        pygame.draw.polygon(screen, "black", triangle, 2)
+        if self.shield:
+            pygame.draw.polygon(screen, (78, 142, 245), triangle, 4)
+        else:
+            pygame.draw.polygon(screen, "black", triangle, 2)
 
     def rotate(self, dt): 
         self.rotation += PLAYER_TURN_SPEED * dt
@@ -35,9 +40,9 @@ class Player(TriangleShape):
     def move(self, dt, accelerating, decelerating):
         direction = pygame.Vector2(0, 1).rotate(self.rotation)
         if accelerating:
-            self.velocity += direction * PLAYER_ACCELERATION * dt
+            self.velocity += direction * self.acceleration * dt
         elif decelerating:
-            self.velocity -= direction * PLAYER_ACCELERATION * dt
+            self.velocity -= direction * self.acceleration * dt
         self.position += self.velocity * dt
         self.position.x %= pygame.display.get_window_size()[0]
         self.position.y %= pygame.display.get_window_size()[1]

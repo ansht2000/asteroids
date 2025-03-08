@@ -30,7 +30,6 @@ class Game:
         self.powerup_field = PowerupField()
         self.score = 0
         self.lives = 3
-        self.shield = False
         self.font = pygame.font.SysFont("Arial", 36)
         score_text, score_rect = render_text(
             self.font,
@@ -44,18 +43,10 @@ class Game:
             (255, 255, 255),
             (65, 60)
         )
-        shields_text, shields_rect = render_text(
-            self.font,
-            "Shield: " + ("On" if self.shield else "Off"),
-            (255, 255, 255),
-            (95, 100)
-        )
         self.score_text = score_text
         self.score_rect = score_rect
         self.lives_text = lives_text
         self.lives_rect = lives_rect
-        self.shields_text = shields_text
-        self.shields_rect = shields_rect
         self.bg_image = pygame.image.load('background.png')
         self.bg_image = pygame.transform.scale(
             self.bg_image,
@@ -75,12 +66,11 @@ class Game:
             self.screen.blit(self.bg_image, (0, 0))
             self.screen.blit(self.score_text, self.score_rect)
             self.screen.blit(self.lives_text, self.lives_rect)
-            self.screen.blit(self.shields_text, self.shields_rect)
             for object in self.updatable:
                 object.update(self.dt)
             for asteroid in self.asteroids:
                 if self.player.collision_detected_with_circle_shape(asteroid):
-                    if not self.shield:
+                    if not self.player.shield:
                         self.lives -= 1
                         self.lives_text = self.font.render(
                             f"Lives: {self.lives}",
@@ -90,12 +80,7 @@ class Game:
                         if self.lives <= 0:
                             return GAME_OVER
                     else:
-                        self.shield = False
-                        self.shields_text = self.font.render(
-                            "Shield: Off",
-                            True,
-                            (255, 255, 255),
-                        )
+                        self.player.shield = False
                     self.player.position.x = pygame.display.get_window_size()[0] / 2
                     self.player.position.y = pygame.display.get_window_size()[1] / 2
                 for shot in self.shots:
@@ -112,13 +97,7 @@ class Game:
             for powerup in self.powerups:
                 if self.player.collision_detected_with_circle_shape(powerup):
                     powerup.kill()
-                    self.player.apply_powerup()
-                    self.shield = True
-                    self.shields_text = self.font.render(
-                        "Shield: On",
-                        True,
-                        (255, 255, 255),
-                    )
+                    powerup.apply_powerup(self.player)
             for object in self.drawable:
                 object.draw(self.screen)
             pygame.display.flip()

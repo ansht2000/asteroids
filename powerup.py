@@ -1,4 +1,5 @@
 import pygame
+import pygame.gfxdraw
 from circleshape import CircleShape
 
 class Powerup(CircleShape):
@@ -6,9 +7,12 @@ class Powerup(CircleShape):
         super().__init__(x, y, radius)
 
     def draw(self, screen):
-        pygame.draw.circle(screen, (255, 255, 255), self.position, self.radius, width=10)
+        pass
 
     def update(self, dt):
         self.position += self.velocity * dt
+
+    def apply_powerup(self, player):
+        pass
 
     
