@@ -36,6 +36,6 @@ class GameOverMenu(Menu):
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if  self.buttons["again"][1].collidepoint(event.pos):
-                        return GAME
+                        return NEW_GAME
                     if self.buttons["quit"][1].collidepoint(event.pos):
                         return START_MENU

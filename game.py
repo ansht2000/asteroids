@@ -63,6 +63,8 @@ class Game:
                     if event.key == pygame.K_f:
                         self.player.shot_type += 1
                         self.player.shot_type %= 2
+                    if event.key == pygame.K_ESCAPE:
+                        return PAUSE_MENU
             self.screen.blit(self.bg_image, (0, 0))
             self.screen.blit(self.score_text, self.score_rect)
             self.screen.blit(self.lives_text, self.lives_rect)

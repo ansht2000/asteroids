@@ -4,19 +4,19 @@ from menu import Menu
 from render_utils import render_text
 from constants import *
 
-class StartMenu(Menu):
+class PauseMenu(Menu):
     def __init__(self, screen):
         super().__init__(screen)
         start_text, start_rect = render_text(
             self.font,
-            "Start Game",
+            "Resume Game",
             (255, 255, 255),
             (pygame.display.get_window_size()[0] / 2, pygame.display.get_window_size()[1] / 2 - 50)
         )
         self.buttons["start"] = (start_text, start_rect)
         quit_text, quit_rect = render_text(
             self.font,
-            "Quit Game",
+            "Quit To Main Menu",
             (255, 255, 255),
             (pygame.display.get_window_size()[0] / 2, pygame.display.get_window_size()[1] / 2 + 50)
         )
@@ -36,7 +36,6 @@ class StartMenu(Menu):
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if  self.buttons["start"][1].collidepoint(event.pos):
-                        return NEW_GAME
+                        return RESUME_GAME
                     if self.buttons["quit"][1].collidepoint(event.pos):
-                        pygame.quit()
-                        sys.exit()
+                        return START_MENU
